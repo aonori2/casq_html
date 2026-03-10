@@ -1,0 +1,680 @@
+@charset "utf-8";
+
+/*------------------------------------------------------------------------------
+  reset
+------------------------------------------------------------------------------*/
+
+html,
+input,
+textarea,
+select,
+button {
+  font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", Meiryo, sans-serif;
+  font-weight: 500;
+}
+
+/* IE10以降 游ゴシック文字ずれ対応 */
+html.ie10,
+.ie10 input,
+.ie10 textarea,
+.ie10 select,
+.ie10 button,
+html.ie11,
+.ie11 input,
+.ie11 textarea,
+.ie11 select,
+.ie11 button {
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, sans-serif;
+  font-weight: normal;
+}
+
+html {
+  color: #333;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+/*  background: linear-gradient(135deg, #00c9a7, #005b5b); */
+background: #fafafa;
+background: linear-gradient(90deg, rgba(250, 250, 250, 1) 0%, rgba(235, 247, 252, 1) 62%, rgba(217, 250, 250, 1) 76%, rgba(199, 252, 252, 1) 86%, rgba(208, 247, 247, 1) 94%, rgba(204, 244, 252, 1) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+img {
+  border: 0;
+  margin: 0;
+  vertical-align: top;
+  max-width: 100%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: slideIn 0.8s ease-out forwards;
+}
+
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+input[type="submit"],
+input[type="text"],
+select,
+textarea,
+button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+label {
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.outer-block {
+  min-width: 1040px;
+}
+
+.inner-block {
+  margin: 0 auto;
+  padding: 40px 0 100px;
+  position: relative;
+  width: 1000px;
+}
+
+#wrapper {
+  position: relative;
+}
+
+.pc {
+  display: block !important;
+}
+
+.pc-ib {
+  display: inline-block !important;
+}
+
+.sp {
+  display: none !important;
+}
+
+.sp-ib {
+  display: none !important;
+}
+
+@media screen and (min-width: 641px) {
+  a,
+  a:before,
+  a:after,
+  a img:hover,
+  button,
+  .pagenation .page-num-ul li:hover,
+  .pagenation .prev:hover,
+  .pagenation .next:hover,
+  .back-feature:hover {
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+  }
+
+}
+
+
+
+/*------------------------------------------------------------------------------
+  animation: fadeIn 1.5s ease-out forwards;
+  common
+------------------------------------------------------------------------------*/
+
+/* title */
+
+.c-ttl01 {
+  border-bottom: 3px solid #333;
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  padding-bottom: 5px;
+}
+.c-ttl01 .large {
+  font-size: 38px;
+  color: #e97b21;
+  letter-spacing: -0.05em;
+}
+
+.c-ttl02 {
+  background: #fff9e6;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 60px 0 30px;
+  padding: 10px;
+}
+
+.c-ttl03 {
+  font-size: 18px;
+  margin: 40px 0 10px;
+}
+
+.c-ttl-01 {
+  border-bottom: 3px solid #f00;
+  border-left: 13px solid #f00;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom:  5px;
+  padding-bottom: 5px;
+}
+.c-ttl-02 {
+  border-bottom: 3px solid orange;
+  border-left: 13px solid orange;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom:  5px;
+  padding-bottom: 5px;
+}
+.c-ttl-03 {
+  border-bottom: 3px solid skyblue;
+  border-left: 13px solid skyblue;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom:  5px;
+  padding-bottom: 5px;
+}
+.footer_casq {
+  color:#fff;
+  background: #00A3E3;
+  border-bottom: 3px solid navy;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom:  5px;
+  padding-bottom: 5px;
+}
+.note {
+  color: #404040;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* もくじ */
+
+.contents-li {
+  border: 1px solid #fff1dc;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.contents-li li + li {
+  margin-top: 5px;
+}
+
+.contents-li li a {
+  color: #e97b21;
+}
+@media screen and (min-width: 641px) {
+  .contents-li li a:hover {
+    text-decoration: underline;
+  }
+}
+
+.pagetop {
+  border: 1px solid #ff701e;
+  color: #ff701e;
+  display: inline-block;
+  margin-top: 150px;
+  padding: 60px 40px 20px;
+  position: relative;
+  text-align: center;
+}
+.pagetop::before {
+  border: solid #ff701e;
+  border-width: 1px 0 0 1px;
+  content: "";
+  display: inline-block;
+  margin: auto;
+  position: absolute;
+  top: 25px;
+  left: 0;
+  right: 0;
+  -webkit-transform: rotate(45deg) translate3d(0, 0, 0);
+  transform: rotate(45deg) translate3d(0, 0, 0);
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (min-width: 641px) {
+  .pagetop:hover {
+    background: #fff8ef;
+  }
+}
+
+
+.iframe-wrap {
+  padding: 25px 15px;
+}
+
+
+/*------------------------------------------------------------------------------
+  anim
+------------------------------------------------------------------------------*/
+.c-btn,
+.c-bnr,
+.c-txt {
+  cursor: pointer;
+  transition: .3s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.c-btn {
+  background: #ff701e;
+  border: 2px solid #ff701e;
+  border-radius: 60px;
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  max-width: 300px;
+  padding: 15px 40px;
+  text-align: center;
+}
+
+.c-bnr {
+  background: url(../img/btn-bnr.jpg)no-repeat center center / cover;
+  display: inline-block;
+  width: 240px;
+  height: 240px;
+}
+
+.c-txt {
+  color: #ff701e;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+}
+
+
+/*------------------------------------------------------------------------------
+  シンプル・分かりやすい・綺麗
+------------------------------------------------------------------------------*/
+/* 色反転 */
+.c-btn.reverse:hover {
+  background: #fff;
+  color: #ff701e;
+}
+
+/* 字間が広がる */
+.c-btn.letter-space:hover {
+  letter-spacing: 0.15em;
+}
+
+/* 浮き上がる */
+.c-btn.float:hover {
+  transform: translateY(-5px);
+}
+
+/* ズーム */
+.zoom-box {
+  display: inline-block;
+  overflow: hidden;
+}
+.c-bnr.zoom {
+  display: block;
+  transition-duration: .5s;
+}
+.c-bnr.zoom:hover {
+  transform: scale(1.2);
+}
+
+/* 色が付く */
+.c-bnr.bg {
+  position: relative;
+  overflow: hidden;
+}
+.c-bnr.bg::before,
+.c-bnr.bg::after {
+  content: "";
+  display: block;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  margin: auto;
+  transition: .2s cubic-bezier(0.45, 0, 0.55, 1);
+  opacity: 0;
+}
+.c-bnr.bg::before {
+  background: rgba(190,91,70,.6);
+  width: 100%;
+  height: 100%;
+}
+.c-bnr.bg::after {
+  color: #fff;
+  content: "Read More";
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  right: 0;
+}
+.c-bnr.bg:hover::before,
+.c-bnr.bg:hover::after {
+  opacity: 1;
+}
+
+/*------------------------------------------------------------------------------
+  ポップ・勢いがいい
+------------------------------------------------------------------------------*/
+/* 押下 */
+.c-btn.press {
+  box-shadow: 0 4px 0 #d01a0a;/* ボタンの影 */
+}
+.c-btn.press:hover {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+/* スライド */
+.c-btn.slide {
+  background: #fff;
+  color: #ff701e;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.c-btn.slide::after {
+  background: #ff701e;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  transform: scale(0, 1);
+  transform-origin: left top;
+  transition: .2s cubic-bezier(0.45, 0, 0.55, 1);
+  z-index: -1;
+}
+.c-btn.slide:hover {
+  color: #fff;
+}
+.c-btn.slide:hover::after {
+  transform: scale(1, 1);
+}
+
+/* スライド 斜め */
+.c-btn.slide.skew::after {
+  transform: skewY(-20deg) scale(1, 0);
+  height: 140px;
+}
+.c-btn.slide.skew:hover::after {
+  transform: skewY(-10deg) scale(1, 1);
+}
+
+/* 迫る */
+.c-btn.big {
+  transition-duration: .4s;
+}
+.c-btn.big:hover {
+  transform: scale(1.1);
+}
+
+
+/*------------------------------------------------------------------------------
+  スタイリッシュ・かっこいい・スピーディー
+------------------------------------------------------------------------------*/
+/* グラデーションが切り替わる */
+.c-btn.grad {
+  background: linear-gradient(90deg, rgba(255,112,30,1) 0%, rgba(255,191,48,1) 50%, rgba(255,77,48,1) 100%);
+  background-size: 200% 100%;
+  border: none;
+}
+.c-btn.grad:hover {
+  background-position: 100% 0;
+}
+
+/* ズレ */
+.c-btn.slip {
+  background: transparent;
+  border: none;
+  position: relative;
+  border-radius: 0;
+  z-index: 1;
+}
+.c-btn.slip::before,
+.c-btn.slip::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+  transition: .2s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.c-btn.slip::before {
+  background: #ffb509;
+  border: 2px solid #ffb509;
+  z-index: -1;
+}
+.c-btn.slip::after {
+  background: #fff6dc;
+  z-index: -2;
+}
+.c-btn.slip:hover {
+  color: #ffb509;
+}
+.c-btn.slip:hover::before {
+  background: transparent;
+}
+.c-btn.slip:hover::after {
+  top: 6px;
+  left: 6px;
+}
+
+/* 縮小 */
+.c-bnr.scale:hover {
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.2);
+  transform: scale(0.9);
+}
+
+/* ラインが引かれる */
+.c-txt.line {
+  padding-bottom: 5px;
+  position: relative;
+}
+.c-txt.line::before {
+  background: #ff701e;
+  content: '';
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  transform-origin: right top;
+  transform: scale(0, 1);
+  transition: transform .3s;
+}
+.c-txt.line:hover::before {
+  transform-origin: left top;
+  transform: scale(1, 1);
+}
+
+.c-txt.line.center::before {
+  transform-origin: center top;
+}
+.c-txt.line.center:hover::before {
+  transform: scale(1, 1);
+}
+
+/* マーカー */
+.c-txt.marker {
+  position: relative;
+  z-index: 1;
+  padding: 0 10px;
+}
+.c-txt.marker::before {
+  background: #ff701e;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  transform: scale(0, 1);
+  transform-origin: right top;
+  transition: transform .3s;
+  z-index: -1;
+}
+.c-txt.marker:hover {
+  color: #fff;
+}
+.c-txt.marker:hover::before {
+  transform-origin: left top;
+  transform: scale(1, 1);
+}
+
+
+/*------------------------------------------------------------------------------
+  かわいい・柔らかい
+------------------------------------------------------------------------------*/
+/* 中央から背景色が変わる */
+.c-btn.circle {
+  background: #fff;
+  color: #ff701e;
+  overflow: hidden;
+  position: relative;
+  transition-duration: .4s;
+  z-index: 2;
+}
+.c-btn.circle::after {
+  background: #ff701e;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  margin: auto;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding-top: 100%;
+  height: 0;
+  z-index: -1;
+  transform: translateY(-50%) scale(0.1);
+  transition: opacity .5s, transform 0s;
+  transition-delay: 0s, .4s;
+}
+
+.c-btn.circle:hover {
+  color: #fff;
+}
+.c-btn.circle:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+  transition-delay: 0s;
+  transition: opacity .8s, transform .6s ease-in-out;
+}
+
+/* ブラー */
+.c-bnr.blur,
+.c-bnr.blur::before {
+  transition: .4s cubic-bezier(0.45, 0, 0.55, 1);
+}
+.c-bnr.blur {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.c-bnr.blur::before {
+  background: inherit;
+  content: "";
+  display: block;
+  filter: blur(2px);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  opacity: 0;
+}
+.c-bnr.blur:hover {
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+}
+.c-bnr.blur:hover::before {
+  opacity: 1;
+}
+
+/* 丸くなる */
+.c-bnr.radius {
+  border-radius: 6px;
+  transition-duration: .5s;
+}
+.c-bnr.radius:hover {
+  border-radius: 50%;
+  box-shadow: 0px 0px 16px -6px rgba(0,0,0,0.6);
+}
