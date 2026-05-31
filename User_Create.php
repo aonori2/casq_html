@@ -1,7 +1,6 @@
 <?php
 require_once("../casq_html/db.inc.php");
 
-
 /*
 # 小学1年生	6歳・7歳	2018年(平成30年)4月2日～2019年(平成31年/令和元年)4月1日
 $nen1 = date('Y') - 7;
@@ -209,8 +208,50 @@ try{
     $aa = file_get_contents("../school/0228/s2036eaqit_member20260303154746.csv"); $scid =38; $sccd = "s2036eaqit"; // | 38 | s2036eaqit | 宮城鶴巻校(ｷｬｽｸ)
     $aa = file_get_contents("../school/0228/s2036nbnie_member20260310220756.csv"); $scid =31; $sccd = "s2036nbnie"; // | 31 | s2036nbnie | 幕張校(ｷｬｽｸ)
 
-
 /****************************************************************/
+
+function passid($dbh){
+
+for(;;){
+$su1 = mt_rand(1,3);
+
+$chars2 = '123456789';
+$randomStr1 = substr(str_shuffle($chars2), 0, $su1);
+
+// 使用する英数字を変数$charに指定
+$chars1 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+// ランダムな英数字を生成（7桁）
+$su2 = (10-$su1);
+$randomStr2 = substr(str_shuffle($chars1), 0, $su2);
+
+$randomStr = $randomStr1.$randomStr2;
+$query = "SELECT * FROM users WHERE user_id = '$randomStr'";
+$stmt = $dbh->query($query);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if ( !$row ) break;
+}
+
+return $randomStr;
+}
+
+function user_birth($year){
+    switch( $year ){
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "11":
+        case "12":
+        case "13":
+        case "101":
+        case "102":
+        case "103":
+        case "104":
+        break;
+    }
+}
 
 function user($aa,$scid,$sccd,$dbh){
 	$ary = [];
@@ -332,6 +373,9 @@ function group($aa,$scid,$sccd,$dbh){
 	$dbh->query($sql);
 	}
 }
+
+#$ret = passid($dbh);
+#echo "[$ret] pass end.\n";exit;
 
 #exit;
 group($aa,$scid,$sccd,$dbh);

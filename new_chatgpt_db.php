@@ -15,10 +15,10 @@ $query = "select * from speed_datas where user_id = 1";
 $query = "SELECT * FROM  speed_datas where trial_count=2 order by modified asc";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 707 order by modified asc limit 0,100";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12068 order by modified asc limit 0,100";
-$query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 7315, 7369, 7300, 7366, 7400, 7284, 9552, 7357, 7377, 7383, 7306, 7285, 7301, 7353, 7311)";
 $query = "select * from speed_datas where trial_count = 2 and char_length(question_txt) < 10 order by modified asc limit 0,2800";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12957 order by modified asc limit 0,100";
-$query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 13278 order by modified asc limit 0,100";
+$query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 10324, 1489, 1540, 1486, 8234 )";
+$query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 1623 order by modified asc limit 0,100";
 $stmt = $dbh->query($query);
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 

@@ -1,0 +1,10 @@
+[28-May-2026 14:20:09 UTC] PHP Warning:  require_once(../casq_html/db.inc.php): Failed to open stream: No such file or directory in /home/cmnfsqpx/casq_html/Insert_Data.php on line 2
+[28-May-2026 14:20:09 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '../casq_html/db.inc.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cmnfsqpx/casq_html/Insert_Data.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/cmnfsqpx/casq_html/Insert_Data.php on line 2
+[28-May-2026 14:20:54 UTC] PHP Warning:  require_once(../casq_html/db.inc.php): Failed to open stream: No such file or directory in /home/cmnfsqpx/casq_html/Insert_Data.php on line 2
+[28-May-2026 14:20:54 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '../casq_html/db.inc.php' (include_path='.:/opt/cpanel/ea-php83/root/usr/share/pear') in /home/cmnfsqpx/casq_html/Insert_Data.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/cmnfsqpx/casq_html/Insert_Data.php on line 2
