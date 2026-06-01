@@ -317,6 +317,7 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/niiza.csv");        $scid = 51;
 	$aa = file_get_contents("./CASQ_DATA/20260527/nagareyama.csv");        $scid = 53;
 	$aa = file_get_contents("./CASQ_DATA/20260527/toyocho.csv"); $scid = 18;
+	$aa = file_get_contents("./CASQ_DATA/20260527/toyocho2.csv"); $scid = 18;
 
 
 /*
@@ -434,7 +435,7 @@ exit;
         $val[2] = mb_convert_encoding($val[2], "UTF-8", "AUTO");
 
         $query = "SELECT * FROM users WHERE user_id = '$val[2]'";
-var_dump($query);
+
         $stmt = $dbh->query($query);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         #var_dump($row);
@@ -489,7 +490,6 @@ var_dump($query);
 		    $dbh->query($sql);
         }
         } else{
-var_dump($val);
         }
     }
 exit;

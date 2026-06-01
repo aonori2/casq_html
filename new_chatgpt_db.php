@@ -19,6 +19,7 @@ $query = "select * from speed_datas where trial_count = 2 and char_length(questi
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12957 order by modified asc limit 0,100";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 10324, 1489, 1540, 1486, 8234 )";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 1623 order by modified asc limit 0,100";
+$query = "SELECT * FROM  speed_datas where trial_count=1 and user_id = 1 and this_year = 2026 order by this_year desc,modified asc limit 0,100";
 $stmt = $dbh->query($query);
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
@@ -26,8 +27,9 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $users['user_id'] = $row['user_id'];
     $users['year'] = $row['year'];
     $users['user_school'] = $row['school_id'];
+    $nendo = getFiscalYearOfToday();
 
-    $sql = "select count(user_id) cnt from speed_datas where user_id = {$users['id']} group by user_id";
+    $sql = "select count(user_id) cnt from speed_datas where user_id = {$users['id']} AND this_year = $nendo group by user_id";
     $ret = $dbh->query($sql);
     $res = $ret->fetch(PDO::FETCH_ASSOC);
 
@@ -732,6 +734,20 @@ function get_effc(){
     return [ '柳澤快斗', '寺島裕士', '神谷湊斗', '酒井駿希', '前田大雅', '小関結平', '中山晴翔', '福田海利', '惠美翔和', '嶋田篤人', '小野真優', '常木理翔', '舒文釗', '関井優羽斗', '稲本煌世', '床鍋友昭', '王杍瑜', '萱野雅悠', '坂田羽玖', '橋本琉生', '小松和暉', '川上真ノ介', '古川絢晴', '大串琉希有', '宇津原碧生', '松沢琥太朗', '前川原輝', '古川洸希', '菊地惟斗', '小林優太', '中谷悠真', '白珈宁', '黒川日丸', '村上結悠', '山﨑椋仁', '桜井真治', '千葉悠翔', '五十嵐翔平', '五十嵐煌', '嶋田響人', '湯本琥空', '齋藤風翔', '森川広晴', '澤井一晟', '山口颯月', '川井一成', '阿部純空', '河津圭次朗', '小林侑莉', '茂木懸太郎', '藤波怜央登', '芝崎海', '飯島理仁', '白田一葉', '渡邉隼汰', '荒木田航成', '渡部朝陽', '月井暁貴', '舟越駿', '山田凌雅', '斉藤恵士', '中久木仁飛', '中久木勇飛', '鍵本明来' ];
 
 }
+
+function getFiscalYearOfToday($start_date='04/01'){
+  $today = date('Y/m/d');
+  $start_year = date('Y').'/'.$start_date;// 2015/04/01 or 2016/04/01
+  if(strtotime($today) >= strtotime($start_year)){
+    // e.g. 2015.4.1 ~ 2015.12.31 => 2015
+    $year = date('Y');
+  }else{
+    // e.g. 2016.01.01 ~ 2016.03.31 => 2015
+    $year = date('Y') - 1;
+  }
+  return $year;
+}
+
 /**
 (SELECT trial_count,user_id,format(casq_10m,2) as casq_10m ,RANK() OVER (PARTITION BY trial_count ORDER BY casq_10m ASC) as rank from speed_datas where casq_10m>0  AND year = 3  limit 30) union (SELECT trial_count,user_id,format(casq_30m,2) as casq_30m ,RANK() OVER (PARTITION BY trial_count ORDER BY casq_30m ASC) as rank from speed_datas where casq_30m>0  AND year = 3  limit 30) union (SELECT trial_count,user_id,format(casq_10m_act,2) as casq_10m_act ,RANK() OVER (PARTITION BY trial_count ORDER BY casq_10m_act ASC) as rank from speed_datas where casq_10m_act>0  AND year = 3  limit 30) union (SELECT trial_count,user_id,format(casq_5m_10m_5m,2) as casq_5m_10m_5m ,RANK() OVER (PARTITION BY trial_count ORDER BY casq_5m_10m_5m ASC) as rank from speed_datas where casq_5m_10m_5m>0  AND year = 3  limit 30) union (SELECT trial_count,user_id,standing_jump as standing_jump ,RANK() OVER (PARTITION BY trial_count ORDER BY standing_jump DESC) as rank from speed_datas where standing_jump>0  AND year = 3  limit 30) union (SELECT trial_count,user_id,vertical_jump as vertical_jump ,RANK() OVER (PARTITION BY trial_count ORDER BY vertical_jump DESC) as rank from speed_datas where vertical_jump>0  AND year = 3  limit 30);
 
