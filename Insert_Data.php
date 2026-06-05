@@ -275,7 +275,6 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawagoe.csv"); $scid = 12;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawaguchi.csv"); $scid = 3;
 
-	$aa = file_get_contents("./CASQ_DATA/20260527/asaka.csv"); $scid = 17;
 	$aa = file_get_contents("./CASQ_DATA/20260527/fujimino.csv"); $scid = 7;
 	$aa = file_get_contents("./CASQ_DATA/20260527/urawa.csv"); $scid = 1;
 	$aa = file_get_contents("./CASQ_DATA/20260527/tokorozawa_effc.csv"); $scid = 52;
@@ -302,7 +301,6 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/inbata.csv");        $scid = 34;
 	$aa = file_get_contents("./CASQ_DATA/20260527/ueda.csv");        $scid = 35;
 	$aa = file_get_contents("./CASQ_DATA/20260527/suwa.csv");        $scid = 36;
-	$aa = file_get_contents("./CASQ_DATA/20260527/miyagi_nagamachi.csv");        $scid = 37;
 	$aa = file_get_contents("./CASQ_DATA/20260527/miyagi_tomiya.csv");        $scid = 39;
 	$aa = file_get_contents("./CASQ_DATA/20260527/takasaki.csv");        $scid = 40;
 	$aa = file_get_contents("./CASQ_DATA/20260527/hakata_getu.csv");        $scid = 41;
@@ -318,6 +316,11 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/nagareyama.csv");        $scid = 53;
 	$aa = file_get_contents("./CASQ_DATA/20260527/toyocho.csv"); $scid = 18;
 	$aa = file_get_contents("./CASQ_DATA/20260527/toyocho2.csv"); $scid = 18;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/asaka.csv"); $scid = 17;
+	$aa = file_get_contents("./CASQ_DATA/20260527/hiratuka2.csv"); $scid = 6;
+	$aa = file_get_contents("./CASQ_DATA/20260527/ootakanomori2.csv");     $scid = 53;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/isezaki.csv");     $scid = 54;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/miyagi_nagamachi.csv");        $scid = 37;
 
 
 /*
@@ -416,7 +419,7 @@ exit;
         $val[1] = trim($val[1]); $val[2] = trim($val[2]); $val[3] = trim($val[3]);
         $val[4] = trim($val[4]); $val[5] = trim($val[5]); $val[6] = trim($val[6]);
         $val[7] = trim($val[7]); $val[8] = trim($val[8]); $val[9] = trim($val[9]);
-        if ( is_numeric($val[0]) && is_numeric($val[4]) ){
+        if ( is_numeric($val[0]) && (is_numeric($val[4]) || is_numeric($val[5])) ){
         $val[3] = str_replace('日', '', $val[3]);  // "日"を空文字に置換する
         $val[3] = str_replace('年', '-', $val[3]); // "年"を"-"に置換する
         $val[3] = str_replace('月', '-', $val[3]); // "月"を"-"に置換する
@@ -481,7 +484,7 @@ exit;
         $val[7] = $val[7] ? $val[7] : 0;
         $val[8] = $val[8] ? $val[8] : 0;
         $val[9] = $val[9] ? $val[9] : 0;
-        $sql = "INSERT INTO speed_datas (user_id,speed_date,casq_10m,casq_30m,casq_10m_act,casq_5m_10m_5m,standing_jump,vertical_jump,tmp_user_id,trial_count,year,school_id,this_year) values ($user_id, '{$val[3]}', $val[4], $val[5], $val[6], $val[7], $val[8], $val[9], '$tmp_user_id',$trial_count,$year,$school,$this_year) ON DUPLICATE KEY UPDATE created = created, school_id = $school, speed_date = '{$val[3]}'";
+        $sql = "INSERT INTO speed_datas (user_id,speed_date,casq_10m,casq_30m,casq_10m_act,casq_5m_10m_5m,standing_jump,vertical_jump,tmp_user_id,trial_count,year,school_id,this_year) values ($user_id, '{$val[3]}', $val[4], $val[5], $val[6], $val[7], $val[8], $val[9], '$tmp_user_id',$trial_count,$year,$school,$this_year) ON DUPLICATE KEY UPDATE year = $year, created = created, school_id = $school, speed_date = '{$val[3]}'";
         echo "OK:($user_id)\n";
         if ( $argv[1] == "test" ){
             echo $val[1]."\n";

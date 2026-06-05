@@ -3,7 +3,6 @@ set_time_limit(0);
 ini_set("memory_limit", "-1");
 date_default_timezone_set('Asia/Tokyo'); //日本のタイムゾーンに設定
 include_once('./db.inc.php');
-$trial_count = 2;
 
 $now  = date('Y-m-d H:i:s');
 #$query = "SELECT u.id,u.shool_id,s.casq_10m FROM users u inner join speed_datas s on u.id = s.user_id where s.trial_count = 1 limit 1";
@@ -19,8 +18,20 @@ $query = "select * from speed_datas where trial_count = 2 and char_length(questi
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12957 order by modified asc limit 0,100";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 10324, 1489, 1540, 1486, 8234 )";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 1623 order by modified asc limit 0,100";
-$query = "SELECT * FROM  speed_datas where trial_count=1 and user_id = 1 and this_year = 2026 order by this_year desc,modified asc limit 0,100";
+$query = "select * from speed_datas where id = 10768";
+$query = "select * from speed_datas where user_id = 1 and this_year = 2026";
+
+$query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 AND char_length(advice_txt)<10 order by this_year desc,user_id, modified asc limit 0,100";
+$query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 order by this_year desc, modified asc limit 350";
 $stmt = $dbh->query($query);
+
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
+                    $trial_count = 1;
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
+/////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
     $users['id'] = $row['user_id'];
@@ -28,15 +39,16 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $users['year'] = $row['year'];
     $users['user_school'] = $row['school_id'];
     $nendo = getFiscalYearOfToday();
+    $this_year = $row['this_year'];
 
-    $sql = "select count(user_id) cnt from speed_datas where user_id = {$users['id']} AND this_year = $nendo group by user_id";
-    $ret = $dbh->query($sql);
-    $res = $ret->fetch(PDO::FETCH_ASSOC);
+    if ( $trial_count > 1 ){
 
-    if ( $res['cnt'] > 1 ){
-    list($user_rank,$gpt,$user_rank2,$best_time,$avg_ary) = get_rank( $users );
-    $req_question2 = get_data( $users,$user_rank[($trial_count-1)] );
-    $req_question1 = "前回の測定値は、".strstr($req_question2,"私",true);
+    $trial_count2 = ($trial_count-1);
+    $query = "select * from speed_datas where user_id = {$row['user_id']} and this_year = $this_year and trial_count = $trial_count2";
+    $stmt = $dbh->query($query);
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $req_question1 = "前回の測定値は、".strstr($res['question_txt'],"私",true);
 
     list($user_rank,$gpt,$user_rank2,$best_time,$avg_ary) = get_rank( $users );
     $req_question2 = get_data( $users,$user_rank[$trial_count] );
@@ -55,8 +67,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 #continue;
 
     if ( strlen($req_question2)>500 ){
-    $sql2 = "update speed_datas set advice_txt= '$req_question2', question_txt= '$question_txt',  modified='$now' WHERE user_id = {$users['id']} and trial_count=$trial_count";
-#echo $sql2;exit;
+    $sql2 = "update speed_datas set advice_txt= '$req_question2', question_txt= '$question_txt',  modified='$now' WHERE user_id = {$users['id']} and trial_count=$trial_count and this_year = $this_year";
+#echo $sql2;
     $dbh->query($sql2);
     $u =  get_user($users['id']);
     echo "END. {$users['id']}:: {$u['user_id']}\n";
@@ -484,7 +496,7 @@ function get_data($users, $user_rank){
 
     $nen = get_nen();
     $req_question = '10メートル走は5.21秒です。平均は5.59秒です。5メートルリアクション走は1.8秒です。平均は2.0秒です。5-10-5メートルのアジリティ走は8秒です。平均>は9.01秒です。私は小学5年生です。アドバイスをお願いします。最後に一言、プロアスリートになるために、喝を入れてください。';
-    $req_question2 = $gpt1.$gpt2.$gpt3.$gtp4.$gpt5.$gpt6.'私は'.$nen[$year].'です。アドバイスをお願いします。最後に、プロアスリートになるための心構えを教えてください。';
+    $req_question2 = $gpt1.$gpt2.$gpt3.$gpt4.$gpt5.$gpt6.'私は'.$nen[$year].'です。アドバイスをお願いします。最後に、プロアスリートになるための心構えを教えてください。';
 
     return ($req_question2);
 

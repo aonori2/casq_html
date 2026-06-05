@@ -51,14 +51,36 @@ function user_birth($year){
 }
 
 function user($aa,$dbh){
+        $ok_names = [
+'渡辺剣士朗',
+'渡辺花',
+'桒野隆宏',
+'松下宗一朗',
+'葛原あいか',
+'宮田祐孝',
+'鴇澤賢',
+'阿部理未',
+'橋戸佑介',
+'風間リュウ',
+];
+
 	$ary = [];
 	foreach( explode("\n",$aa) as $val ){
 		$ln = explode(",", $val);
 		$ln[0] = trim($ln[0],'"');
         if ( !is_numeric($ln[0]) ) continue;
+		$ln[55] = trim($ln[55],'"');
+        if ( $ln[55] != 'P0001' && $ln[55] != 'P0002' && $ln[55] != 'P0003' && $ln[55] != 'P0017' && $ln[55] != 'P0028' ){
+        #echo $ln[55]."\n";
+        continue;
+        }
 		if ( trim($ln[6]) ){
 		$nam1 = trim($ln[3],'"');
 		$nam2 = trim($ln[4],'"');
+        if ( in_array($nam1.$nam2,$ok_names) ){
+        #echo $nam1.$nam2."\n";
+        continue;
+        }
         $query = "SELECT * FROM users WHERE user_name = '$nam1' AND user_name2 = '$nam2'";
 		$stmt = $dbh->query($query);
 		if( !$row = $stmt->rowCount() ){
