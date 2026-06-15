@@ -303,8 +303,6 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/suwa.csv");        $scid = 36;
 	$aa = file_get_contents("./CASQ_DATA/20260527/miyagi_tomiya.csv");        $scid = 39;
 	$aa = file_get_contents("./CASQ_DATA/20260527/takasaki.csv");        $scid = 40;
-	$aa = file_get_contents("./CASQ_DATA/20260527/hakata_getu.csv");        $scid = 41;
-	$aa = file_get_contents("./CASQ_DATA/20260527/hakata_kin.csv");        $scid = 41;
 	$aa = file_get_contents("./CASQ_DATA/20260527/fukuoka_higashi_ka.csv");        $scid = 42;
 	$aa = file_get_contents("./CASQ_DATA/20260527/fukuoka_higashi_sui.csv");        $scid = 42;
 	$aa = file_get_contents("./CASQ_DATA/20260527/fukuoka_nishi.csv");        $scid = 43;
@@ -321,6 +319,8 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/ootakanomori2.csv");     $scid = 53;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/isezaki.csv");     $scid = 54;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/miyagi_nagamachi.csv");        $scid = 37;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_kin.csv");        $scid = 41;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_getu.csv");        $scid = 41;
 
 
 /*
