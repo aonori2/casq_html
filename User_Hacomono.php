@@ -4,6 +4,8 @@ require_once("../casq_html/db.inc.php");
 try{
 
 $aa = file_get_contents("./casq-efss_query_ML010_2026-05-28_19_34_48.csv");
+$aa = file_get_contents("./casq-efss_query_ML001_2026-10-19_15_53_02.csv");
+$aa = file_get_contents("./casq-efss_query_ML001_2026-10-19_16_45_07.csv");
 
 /****************************************************************/
 
@@ -50,7 +52,7 @@ function user_birth($year){
     }
 }
 
-function user($aa,$dbh){
+function user($aa,$dbh,$argv=null){
         $ok_names = [
 '渡辺剣士朗',
 '渡辺花',
@@ -67,11 +69,26 @@ function user($aa,$dbh){
 	$ary = [];
 	foreach( explode("\n",$aa) as $val ){
 		$ln = explode(",", $val);
-		$ln[0] = trim($ln[0],'"');
-        if ( !is_numeric($ln[0]) ) continue;
+        $ln[0] = str_replace('"', '', $ln[0]);
+        $str = $ln[0]; // string(7) "4118" が入っている変数
+
+        $str = mb_convert_kana($str, "as", "UTF-8");
+        $str = trim($str);
+
+        // 2. ダブルクォーテーションやシングルクォーテーションを削除
+        $str = str_replace(['"', "'"], '', $str);
+
+        // 3. 念のため「数字以外」をすべて完全に排除
+        $str = preg_replace('/[^0-9]/', '', $str);
+
+        // 4. 数値にキャスト
+        $num = (int)$str;
+        $ln[0] = $num;
+        if ( !is_numeric($ln[0]) ){
+            continue;
+        }
 		$ln[55] = trim($ln[55],'"');
-        if ( $ln[55] != 'P0001' && $ln[55] != 'P0002' && $ln[55] != 'P0003' && $ln[55] != 'P0017' && $ln[55] != 'P0028' ){
-        #echo $ln[55]."\n";
+        if ( !strstr($ln[64],'キャスク') && $ln[55] != 'P0001' && $ln[55] != 'P0002' && $ln[55] != 'P0003' && $ln[55] != 'P0017' && $ln[55] != 'P0028' ){
         continue;
         }
 		if ( trim($ln[6]) ){
@@ -113,8 +130,11 @@ function user($aa,$dbh){
         $user_kana = mb_convert_encoding($user_kana, "UTF-8", "AUTO");
         $user_kana2 = mb_convert_encoding($user_kana2, "UTF-8", "AUTO");
 		$sql = "INSERT INTO users (user_id,user_birthday,user_name,user_name2,user_kana,user_kana2) values ('{$user_id}','{$user_birthday}','{$user_name}','{$user_name2}','{$user_kana}','{$user_kana2}' ) ON DUPLICATE KEY UPDATE user_id = '{$user_id}' ;";
-#echo $sql."\n";
-		$dbh->query($sql);
+        if ( $argv[1] == "test" ){
+            echo $sql."\n";
+        } else {
+		    $dbh->query($sql);
+        }
         #sleep(1);
 	}
 }
@@ -187,7 +207,7 @@ function group($aa,$scid,$sccd,$dbh){
 #echo "group end.\n";
 #exit;
 #sleep(2);
-user($aa,$dbh);
+user($aa,$dbh,$argv);
 echo "user end.\n";
 
 require_once("./nen.php");
@@ -222,4 +242,3 @@ exit;
 }
 // 接続を閉じる
 $dbh = null;
-

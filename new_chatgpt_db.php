@@ -2,7 +2,7 @@
 set_time_limit(0);
 ini_set("memory_limit", "-1");
 date_default_timezone_set('Asia/Tokyo'); //日本のタイムゾーンに設定
-include_once('./db.inc.php');
+include_once('/home/cmnfsqpx/casq_html/db.inc.php');
 
 $now  = date('Y-m-d H:i:s');
 #$query = "SELECT u.id,u.shool_id,s.casq_10m FROM users u inner join speed_datas s on u.id = s.user_id where s.trial_count = 1 limit 1";
@@ -19,10 +19,10 @@ $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12957 ord
 $query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 10324, 1489, 1540, 1486, 8234 )";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 1623 order by modified asc limit 0,100";
 $query = "select * from speed_datas where id = 10768";
-$query = "select * from speed_datas where user_id = 1 and this_year = 2026";
 
 $query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 AND char_length(advice_txt)<10 order by this_year desc,user_id, modified asc limit 0,100";
-$query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 order by this_year desc, modified asc limit 350";
+$query = "select * from speed_datas where id = 10567 and this_year = 2026";
+$query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 order by this_year desc, modified asc limit 2350";
 $stmt = $dbh->query($query);
 
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
@@ -51,14 +51,14 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $req_question1 = "前回の測定値は、".strstr($res['question_txt'],"私",true);
 
     list($user_rank,$gpt,$user_rank2,$best_time,$avg_ary) = get_rank( $users );
-    $req_question2 = get_data( $users,$user_rank[$trial_count] );
+    $req_question2 = get_data( $users,$user_rank[$trial_count], $avg_ary );
     $req_question2 =  $req_question1." 今回は、".$req_question2;
-    #echo $req_question2;exit;
     } else {
 
     list($user_rank,$gpt,$user_rank2,$best_time,$avg_ary) = get_rank( $users );
     $req_question2 = get_data( $users,$user_rank[$trial_count] );
     }
+#var_dump( $user_rank );exit;
 #echo $req_question2;exit;
     
     list($req_question2,$question_txt) = chatgpt_api( $req_question2 );
@@ -175,7 +175,7 @@ try{
 }
 
 function get_rank($users, $columns_ary = []){
-    global $dbh;
+    global $dbh, $trial_count, $this_year;
 
     if ( empty($users) ){
         return false;
@@ -227,7 +227,7 @@ function get_rank($users, $columns_ary = []){
         } else {
             $dec = "ASC";
         }
-	    $query = "SELECT speed_date,trial_count,user_id,cast( format($col,2) as decimal(5,2) ) as $col ,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas WHERE $col > 0 AND year = $year $sql1";
+	    $query = "SELECT speed_date,trial_count,user_id,cast( format($col,2) as decimal(5,2) ) as $col ,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas WHERE $col > 0 AND trial_count=$trial_count AND this_year=$this_year AND year = $year $sql1";
         #echo $query."\n";
 	    $stmt = $dbh->query($query);
         $all_count = $stmt->rowCount();
@@ -274,13 +274,13 @@ function get_rank($users, $columns_ary = []){
 
         foreach( $datas as $v ){
             if ( $col == "standing_jump" || $col == "vertical_jump" ){
-                $$col[$v] = number_format($$col[$v]);
+                $$col[$v] = (@$$col[$v]) ? number_format(@$$col[$v]) : 0;
             }
-            $speed_datas[$v][$col][$user_id]['rank'] = ($speed_datas[$v][$col][$user_id]['rank']==NULL) ? $all_count : $speed_datas[$v][$col][$user_id]['rank'] ;
+            $speed_datas[$v][$col][$user_id]['rank'] = (@$speed_datas[$v][$col][$user_id]['rank']==NULL) ? $all_count : @$speed_datas[$v][$col][$user_id]['rank'] ;
             $point  = number_format((1-(((int)$speed_datas[$v][$col][$user_id]['rank'] - 1)/count($speed_datas[$v][$col])))*100);
             $apoint  = number_format((1-(((int)@$speed_datas[$v][$col][$uid]['rank'] - 1)/count(@$speed_datas[$v][$col])))*100);
 
-            $sql = "select advice_txt from speed_datas where user_id = {$users['id']} and trial_count=$v";
+            $sql = "select advice_txt from speed_datas where user_id = {$users['id']} and trial_count=$v and this_year=$this_year";
             $stmt2 = $dbh->query($sql);
             $rows = $stmt2->fetch(PDO::FETCH_ASSOC);
             if ( $point < 0 ){
@@ -290,17 +290,37 @@ function get_rank($users, $columns_ary = []){
                 $point = 0;
             }
 
-            $user_rank[$v][$col] = [ 'date'=>$date[$v], 'nam'=> $snm, 'avg' => $apoint, 'rank' => $speed_datas[$v][$col][$user_id]['rank'], 'count' => ($all_count) ? $all_count : $old_all_count, 'point' => $point, 'time'=> $$col[$v], 'rank-time' => $data[$col], 'effc' => $ok_flag ];
+            $ssql2 = [ "",  " AND school_id = {$users['user_school']} "];
+            $avg_time = [];
+            foreach( $ssql2 as $iii => $sql11 ){
+                $sql = "select format(avg($col),2) avg,trial_count from speed_datas where $col>0 and trial_count=$v and this_year=$this_year and year = $year $sql11";
+                $stmt2 = $dbh->query($sql);
+                $rows = $stmt2->fetch(PDO::FETCH_ASSOC);
+                if ( $col == "standing_jump" || $col == "vertical_jump" ){
+                    $rows['avg'] = number_format($rows['avg']);
+                }
+                $avg_time[] = $rows['avg'];
+            }
+
+            $user_rank[$v][$col] = [ 'date'=> @$date[$v], 'nam'=> $snm, 'avg' => $apoint, 'rank' => @$speed_datas[$v][$col][$user_id]['rank'], 'count' => ($all_count) ? $all_count : $old_all_count, 'point' => $point, 'time'=> @$$col[$v], 'rank-time' => @$data[$col], 'effc' => $ok_flag, 'avg-time' => $avg_time ];
             $gpt[$v] = $rows['advice_txt'];
         }
 
-        $sql = "select format(avg($col),2) avg from speed_datas where year = $year $sql1";
+        $sql_trial = "";
+        if ( $trial_count ){
+            $sql_trial = " AND trial_count=$trial_count ";
+        }
+        $sql_year = "";
+        if ( $this_year ){
+            $sql_year = " AND this_year=$this_year ";
+        }
+        $sql = "select format(avg($col),2) avg from speed_datas where $col>0 $sql_trial $sql_year and year = $year";
         $stmt2 = $dbh->query($sql);
         $rows = $stmt2->fetch(PDO::FETCH_ASSOC);
         if ( $col == "standing_jump" || $col == "vertical_jump" ){
-        $avg_ary[$ii][$col] = number_format($rows['avg']);
+        $avg_ary[$col] = number_format($rows['avg']);
         } else {
-        $avg_ary[$ii][$col] = $rows['avg'];
+        $avg_ary[$col] = $rows['avg'];
         }
         #echo $sql."\n";
         $old_all_count = $all_count;
@@ -445,8 +465,9 @@ function get_user_year($year, $trial=1){
 
 }
 
-function get_data($users, $user_rank){
-    global $dbh;
+function get_data($users, $user_rank, $avg_ary = []){
+    global $dbh, $trial_count, $this_year;
+#var_dump( $avg_ary );exit;
 
     $year = $users['year'];
     $columns = [ 'casq_10m',  'casq_30m',  'casq_10m_act',  'casq_5m_10m_5m',  'standing_jump', 'vertical_jump' ]; 
@@ -456,9 +477,9 @@ function get_data($users, $user_rank){
         } else {
             $dec = "ASC";
         }
-        $sql = "select '$col',format(avg($col),2)avg  from speed_datas where year = $year and $col>0";
         $sql = "select '$col',max($col)max,min($col)min,format(avg($col),2)avg  from speed_datas where year = 4 and $col>0";
-	    $sql = "SELECT trial_count,user_id,format($col,2) time,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas Where year={$users['year']}";
+        $sql = "select '$col',format(avg($col),2)avg  from speed_datas where year = $year and $col>0 and trial_count=$trial_count and this_year=$this_year";
+	    $sql = "SELECT trial_count,user_id,format($col,2) time,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas Where year = $year and $col>0 and trial_count=$trial_count and this_year=$this_year"; 
         $stmt = $dbh->query($sql);
         $row = $stmt->fetchall(PDO::FETCH_ASSOC);
         $count = $stmt->rowCount();
@@ -466,30 +487,32 @@ function get_data($users, $user_rank){
         if ( $col == "standing_jump" || $col == "vertical_jump" ){
             $row[$cnt]['time'] = number_format($row[$cnt]['time']);
         }
-        $year_avg[$col] = $row[$cnt];
+/*
+        $year_avg[$col] = $avg_ary[$col];
+*/
 
         if ( $col ==  'casq_10m' && isset($user_rank[$col]) ){
-            $gpt1 = "10メートル走は{$user_rank[$col]['time']}秒です。平均は{$year_avg[$col]['time']}秒です。";
+            $gpt1 = "10メートル走は{$user_rank[$col]['time']}秒です。平均は{$user_rank[$col]['avg-time'][0]}秒です。";
             $gpt1 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
         if ( $col ==  'casq_30m' ){
-            $gpt2 = "30メートル走は{$user_rank[$col]['time']}秒です。平均は{$year_avg[$col]['time']}秒です。";
+            $gpt2 = "30メートル走は{$user_rank[$col]['time']}秒です。平均は{$user_rank[$col]['avg-time'][0]}秒です。";
             $gpt2 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
         if ( $col ==  'casq_10m_act' ){
-            $gpt3 = "10メートルリアクション走は{$user_rank[$col]['time']}秒です。平均は{$year_avg[$col]['time']}秒です。";
+            $gpt3 = "10メートルリアクション走は{$user_rank[$col]['time']}秒です。平均は{$user_rank[$col]['avg-time'][0]}秒です。";
             $gpt3 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
         if ( $col ==  'casq_5m_10m_5m' ){
-            $gpt4 = "5メートル-10メートル-5メートルリアクション走は{$user_rank[$col]['time']}秒です。平均は{$year_avg[$col]['time']}秒です。";
+            $gpt4 = "5メートル-10メートル-5メートルリアクション走は{$user_rank[$col]['time']}秒です。平均は{$user_rank[$col]['avg-time'][0]}秒です。";
             $gpt4 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
         if ( $col ==  'standing_jump' ){
-            $gpt5 = "立ち幅跳びは{$user_rank[$col]['time']}cmです。平均は{$year_avg[$col]['time']}cmです。";
+            $gpt5 = "立ち幅跳びは{$user_rank[$col]['time']}cmです。平均は{$user_rank[$col]['avg-time'][0]}cmです。";
             $gpt5 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
         if ( $col ==  'vertical_jump' ){
-            $gpt6 = "垂直跳びは{$user_rank[$col]['time']}cmです。平均は{$year_avg[$col]['time']}cmです。";
+            $gpt6 = "垂直跳びは{$user_rank[$col]['time']}cmです。平均は{$user_rank[$col]['avg-time'][0]}cmです。";
             $gpt6 .= "学年順位は、{$user_rank[$col]['rank']}/{$count}位です。";
         }
     }
@@ -506,42 +529,35 @@ function get_data($users, $user_rank){
 function get_avg($users){
     global $dbh;
 
-    $sql = "SELECT user_id,year FROM users Where user_status = 0 and year = 1";
-    $stmt = $dbh->query($sql);
-    $user_id = $users['id'];
-
-    #$ret = get_user_year($users['year']);
+    $ssql = [ "",  " AND school_id = {$users['user_school']} "];
+    foreach( $ssql as $ii => $sql1 ){
 
     // # id user_id casq_10m casq_30m casq_10m_act casq_5_10_5m standing_jump vertical_jump advice_txt tmp_user_id height weight speed_date created modified
-    $columns = [ 'casq_10m',  'casq_30m',  'casq_10m_act',  'casq_5m_10m_5m',  'standing_jump', 'vertical_jump' ]; 
+    $columns = [ 'casq_10m',  'casq_30m',  'casq_10m_act',  'casq_5m_10m_5m',  'standing_jump', 'vertical_jump' ];
     foreach( $columns as $col ){
         if ( $col == "standing_jump" || $col == "vertical_jump" ){
             $dec = "DESC";
         } else {
             $dec = "ASC";
         }
-	    $query = "SELECT trial_count,user_id,$col,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas Where year={$users['year']}";
+        $query = "SELECT trial_count,user_id,$col,RANK() OVER (PARTITION BY trial_count ORDER BY $col $dec) as rank from speed_datas Where year={$users['year']}";
         #$sql = "select max($col)max,min($col)min,format(avg($col),2)avg  from speed_datas where year = 4";
         #echo $sql."\n";
+        $sql = "select format(avg($col),2) avg,trial_count from speed_datas where $col>0 this_yser=$nendo and year = $year $sql1";
+        $stmt = $dbh->query($query);
 
-	    $stmt = $dbh->query($query);
-        #echo $query."\n";
-        // 表示処理
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        #echo $row["user_name"];
-            $i = $row['trial_count'];
-            $speed_datas[$i][$col][$row['user_id']] = $row;
-            $datas[$i] = $i;
-        }
-        #$all_count[$col] = count($speed_datas[$col]);
-
-        foreach( $datas as $v ){
-            $point  = number_format((1-(((int)$speed_datas[$v][$col][$user_id]['rank'] - 1)/count($speed_datas[$v][$col])))*100);
-            $user_rank[$v][$col] = [ 'rank' => $speed_datas[$v][$col][$user_id]['rank'], 'count' => count($speed_datas[$v][$col]), 'point' => $point];
+        $rows = $stmt2->fetch(PDO::FETCH_ASSOC);
+        $trial_count = $rows['trial_count'];
+        if ( $col == "standing_jump" || $col == "vertical_jump" ){
+            $avg_ary[$trial_count][$col] = number_format($rows['avg']);
+        } else {
+            $avg_ary[$trial_count][$col] = $rows['avg'];
         }
     }
+    }
 
-    return  $user_rank;
+    return  $avg_ary;
+
 }
 
 function get_best($users=[], $ranking=null){
@@ -663,7 +679,7 @@ function get_advice($user_id){
 function chatgpt_api($req_question2){
 $input_json = file_get_contents('php://input');
 $post = json_decode( $input_json, true );
-$req_question = $post['prompt'];
+$req_question = !is_null($post) ? $post['prompt'] : NULL;
 
 $result = array();
 

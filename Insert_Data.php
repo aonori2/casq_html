@@ -273,7 +273,6 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/iruma.csv"); $scid = 9;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/yoon.csv"); $scid = 13;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawagoe.csv"); $scid = 12;
-	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawaguchi.csv"); $scid = 3;
 
 	$aa = file_get_contents("./CASQ_DATA/20260527/fujimino.csv"); $scid = 7;
 	$aa = file_get_contents("./CASQ_DATA/20260527/urawa.csv"); $scid = 1;
@@ -291,7 +290,6 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/kawasaki_ka.csv"); $scid = 26;
 	$aa = file_get_contents("./CASQ_DATA/20260527/kawasaki_kin.csv"); $scid = 26;
 	$aa = file_get_contents("./CASQ_DATA/20260527/shinyuri.csv"); $scid = 28;
-	$aa = file_get_contents("./CASQ_DATA/20260527/kashiwa.csv"); $scid = 29;
 	$aa = file_get_contents("./CASQ_DATA/20260527/moraju_kashiwa.csv");     $scid = 46;
 	$aa = file_get_contents("./CASQ_DATA/20260527/ichikawa.csv");        $scid = 30;
 	$aa = file_get_contents("./CASQ_DATA/20260527/makuhari.csv");        $scid = 31;
@@ -321,6 +319,49 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/miyagi_nagamachi.csv");        $scid = 37;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_kin.csv");        $scid = 41;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_getu.csv");        $scid = 41;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/kashiwa.csv"); $scid = 29;
+	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawaguchi.csv"); $scid = 3;
+	$aa = file_get_contents("./zip/all.csv");
+	$aa = file_get_contents("./CASQ_DATA/20261019/toyocho.csv"); $scid = 18;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi.csv"); $scid = 3;
+	$aa = file_get_contents("./CASQ_DATA/20261019/minamiurawa.csv"); $scid = 8;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kashiwa.csv"); $scid = 29;
+	$aa = file_get_contents("./CASQ_DATA/20261019/urawa.csv"); $scid = 1;
+	$aa = file_get_contents("./CASQ_DATA/20261019/nagamachi.csv"); $scid = 37;
+	$aa = file_get_contents("./CASQ_DATA/20261019/tomiya.csv");        $scid = 39;
+	$aa = file_get_contents("./CASQ_DATA/20261019/isezaki.csv");     $scid = 54;
+	$aa = file_get_contents("./CASQ_DATA/20261019/iruma.csv"); $scid = 9;
+	$aa = file_get_contents("./CASQ_DATA/20261019/fujimino.csv"); $scid = 7;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawagoe.csv"); $scid = 12;
+	$aa = file_get_contents("./CASQ_DATA/20261019/niiza.csv");        $scid = 51;
+	$aa = file_get_contents("./CASQ_DATA/tokorozawa.csv"); $scid = 5;
+	$aa = file_get_contents("./CASQ_DATA/20261019/takasaki.csv");        $scid = 40;
+	$aa = file_get_contents("./CASQ_DATA/20261019/ichikawa.csv");        $scid = 30;
+	$aa = file_get_contents("./CASQ_DATA/20261019/nishitokyo.csv"); $scid = 20;
+	$aa = file_get_contents("./CASQ_DATA/20261019/makuhari.csv");        $scid = 31;
+	$aa = file_get_contents("./CASQ_DATA/20261019/moraju.csv");     $scid = 46;
+	$aa = file_get_contents("./CASQ_DATA/20261019/ootaka.csv");     $scid = 53;
+	$aa = file_get_contents("./CASQ_DATA/20261019/shinyuri.csv"); $scid = 28;
+	$aa = file_get_contents("./CASQ_DATA/20261019/tamacenter.csv"); $scid = 21;
+	$aa = file_get_contents("./CASQ_DATA/20261019/tengachaya.csv"); $scid = 44;
+    $aa = file_get_contents("./CASQ_DATA/20261019/ef_tokorozawa.csv"); $scid = 52;
+	$aa = file_get_contents("./CASQ_DATA/20261019/asaka.csv"); $scid = 17;
+	$aa = file_get_contents("./CASQ_DATA/20261019/hachioji.csv"); $scid = 24;
+	$aa = file_get_contents("./CASQ_DATA/20261019/sakado.csv"); $scid = 15;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kounosu.csv"); $scid = 14;
+	$aa = file_get_contents("./CASQ_DATA/20261019/innbata.csv");        $scid = 34;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kisarazu.csv");        $scid = 33;
+	$aa = file_get_contents("./CASQ_DATA/20261019/hiratuka.csv"); $scid = 6;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawasaki_ka.csv"); $scid = 26;
+	$aa = file_get_contents("./CASQ_DATA/20261019/yono.csv"); $scid = 13;
+	$aa = file_get_contents("./CASQ_DATA/20261019/oomiya.csv"); $scid = 2;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawasaki_kin.csv"); $scid = 26;
+	$aa = file_get_contents("./CASQ_DATA/20261019/hakata_getu.csv");        $scid = 41;
+    $aa = file_get_contents("./CASQ_DATA/20261019/fukuoka_higashi_ka.csv");        $scid = 42;
+    $aa = file_get_contents("./CASQ_DATA/20261019/fukuoka_higashi_sui.csv");        $scid = 42;
+	$aa = file_get_contents("./CASQ_DATA/20261019/fukuoka_nishi.csv");        $scid = 43;
+	$aa = file_get_contents("./CASQ_DATA/20261019/hakata_kin.csv");        $scid = 41;
+
 
 
 /*
@@ -404,7 +445,7 @@ exit;
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
     $this_year = 2026;
-    $trial_count = 1;
+    $trial_count = 2;
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
