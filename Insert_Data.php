@@ -317,25 +317,24 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20260527/ootakanomori2.csv");     $scid = 53;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/isezaki.csv");     $scid = 54;
 	$aa = file_get_contents("./CASQ_DATA/20260527/END/miyagi_nagamachi.csv");        $scid = 37;
-	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_kin.csv");        $scid = 41;
-	$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_getu.csv");        $scid = 41;
-	$aa = file_get_contents("./CASQ_DATA/20260527/END/kashiwa.csv"); $scid = 29;
-	$aa = file_get_contents("./CASQ_DATA/20260527/END/kawaguchi.csv"); $scid = 3;
-	$aa = file_get_contents("./zip/all.csv");
+	#$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_kin.csv");        $scid = 41;
+	#$aa = file_get_contents("./CASQ_DATA/20260527/END/hakata_getu.csv");        $scid = 41;
+	#$aa = file_get_contents("./CASQ_DATA/20260527/END/kashiwa.csv"); $scid = 29;
+	#$aa = file_get_contents("./CASQ_DATA/20260527/END/kawaguchi.csv"); $scid = 3;
+
+
+	$aa = file_get_contents("./CASQ_DATA/20261019/tengachaya.csv"); $scid = 44;
+	$aa = file_get_contents("./CASQ_DATA/20261019/yodogawa.csv");        $scid = 47;
+	$aa = file_get_contents("./CASQ_DATA/20261019/nishi_kujo.csv");       $scid = 48;
+	$aa = file_get_contents("./CASQ_DATA/20261019/ibaraki.csv");        $scid = 49;
+	$aa = file_get_contents("./CASQ_DATA/20261019/shirogane.csv"); $scid = 25;
 	$aa = file_get_contents("./CASQ_DATA/20261019/toyocho.csv"); $scid = 18;
-	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi.csv"); $scid = 3;
-	$aa = file_get_contents("./CASQ_DATA/20261019/minamiurawa.csv"); $scid = 8;
-	$aa = file_get_contents("./CASQ_DATA/20261019/kashiwa.csv"); $scid = 29;
 	$aa = file_get_contents("./CASQ_DATA/20261019/urawa.csv"); $scid = 1;
-	$aa = file_get_contents("./CASQ_DATA/20261019/nagamachi.csv"); $scid = 37;
-	$aa = file_get_contents("./CASQ_DATA/20261019/tomiya.csv");        $scid = 39;
 	$aa = file_get_contents("./CASQ_DATA/20261019/isezaki.csv");     $scid = 54;
 	$aa = file_get_contents("./CASQ_DATA/20261019/iruma.csv"); $scid = 9;
-	$aa = file_get_contents("./CASQ_DATA/20261019/fujimino.csv"); $scid = 7;
 	$aa = file_get_contents("./CASQ_DATA/20261019/kawagoe.csv"); $scid = 12;
 	$aa = file_get_contents("./CASQ_DATA/20261019/niiza.csv");        $scid = 51;
-	$aa = file_get_contents("./CASQ_DATA/tokorozawa.csv"); $scid = 5;
-	$aa = file_get_contents("./CASQ_DATA/20261019/takasaki.csv");        $scid = 40;
+	$aa = file_get_contents("./CASQ_DATA/20261019/tokorozawa.csv"); $scid = 5;
 	$aa = file_get_contents("./CASQ_DATA/20261019/ichikawa.csv");        $scid = 30;
 	$aa = file_get_contents("./CASQ_DATA/20261019/nishitokyo.csv"); $scid = 20;
 	$aa = file_get_contents("./CASQ_DATA/20261019/makuhari.csv");        $scid = 31;
@@ -343,11 +342,8 @@ try{
 	$aa = file_get_contents("./CASQ_DATA/20261019/ootaka.csv");     $scid = 53;
 	$aa = file_get_contents("./CASQ_DATA/20261019/shinyuri.csv"); $scid = 28;
 	$aa = file_get_contents("./CASQ_DATA/20261019/tamacenter.csv"); $scid = 21;
-	$aa = file_get_contents("./CASQ_DATA/20261019/tengachaya.csv"); $scid = 44;
     $aa = file_get_contents("./CASQ_DATA/20261019/ef_tokorozawa.csv"); $scid = 52;
-	$aa = file_get_contents("./CASQ_DATA/20261019/asaka.csv"); $scid = 17;
 	$aa = file_get_contents("./CASQ_DATA/20261019/hachioji.csv"); $scid = 24;
-	$aa = file_get_contents("./CASQ_DATA/20261019/sakado.csv"); $scid = 15;
 	$aa = file_get_contents("./CASQ_DATA/20261019/kounosu.csv"); $scid = 14;
 	$aa = file_get_contents("./CASQ_DATA/20261019/innbata.csv");        $scid = 34;
 	$aa = file_get_contents("./CASQ_DATA/20261019/kisarazu.csv");        $scid = 33;
@@ -361,7 +357,26 @@ try{
     $aa = file_get_contents("./CASQ_DATA/20261019/fukuoka_higashi_sui.csv");        $scid = 42;
 	$aa = file_get_contents("./CASQ_DATA/20261019/fukuoka_nishi.csv");        $scid = 43;
 	$aa = file_get_contents("./CASQ_DATA/20261019/hakata_kin.csv");        $scid = 41;
-
+	$aa = file_get_contents("./CASQ_DATA/20261019/ueda.csv");        $scid = 35;
+	$aa = file_get_contents("./CASQ_DATA/20261019/swa.csv");        $scid = 36;
+	$aa = file_get_contents("./CASQ_DATA/20261019/okayama_getu.csv");        $scid = 32;
+	$aa = file_get_contents("./CASQ_DATA/20261019/okayama_kin.csv");        $scid = 32;
+	$aa = file_get_contents("./CASQ_DATA/20261019/machida.csv"); $scid = 19;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi_kin.csv"); $scid = 3;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kokubunji.csv"); $scid = 23;
+	$aa = file_get_contents("./CASQ_DATA/20261019/misato.csv"); $scid = 16;
+	$aa = file_get_contents("./CASQ_DATA/20261019/tomiya.csv");        $scid = 39;
+	$aa = file_get_contents("./CASQ_DATA/20261019/sakado.csv"); $scid = 15;
+	$aa = file_get_contents("./CASQ_DATA/20261019/nagamachi.csv"); $scid = 37;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi.csv"); $scid = 3;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi_sui.csv"); $scid = 3;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kokubunji_2.csv"); $scid = 23;
+	$aa = file_get_contents("./CASQ_DATA/20261019/minamiurawa.csv"); $scid = 8;
+	$aa = file_get_contents("./CASQ_DATA/20261019/takasaki.csv");        $scid = 40;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kawaguchi_2.csv"); $scid = 3;
+	$aa = file_get_contents("./CASQ_DATA/20261019/asaka.csv"); $scid = 17;
+	$aa = file_get_contents("./CASQ_DATA/20261019/fujimino.csv"); $scid = 7;
+	$aa = file_get_contents("./CASQ_DATA/20261019/kashiwa.csv"); $scid = 29;
 
 
 /*
@@ -376,7 +391,6 @@ exit;
     foreach( explode("\n",$aa) as $rows ){
         $val = explode(",", $rows);
         $val[0] = trim($val[0]);
-        if ( strstr($val[0],'学年') ) continue;
         if ( strstr($val[1],'名前') ) continue;
         if ( !$val[1] ) continue;
 
@@ -387,6 +401,11 @@ exit;
         } else if ( $val[2] ){
         $query = "SELECT * FROM users WHERE user_id = '{$val[2]}';";
         $stmt = $dbh->query($query);
+        }
+
+        if ( !is_numeric($val[4]) && !is_numeric($val[5]) && !is_numeric($val[6]) && !is_numeric($val[7]) ){
+            //echo $val[1]."\n";
+            continue;
         }
 
         if($rows = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -460,7 +479,7 @@ exit;
         $val[1] = trim($val[1]); $val[2] = trim($val[2]); $val[3] = trim($val[3]);
         $val[4] = trim($val[4]); $val[5] = trim($val[5]); $val[6] = trim($val[6]);
         $val[7] = trim($val[7]); $val[8] = trim($val[8]); $val[9] = trim($val[9]);
-        if ( is_numeric($val[0]) && (is_numeric($val[4]) || is_numeric($val[5])) ){
+        if ( (is_numeric($val[4]) || is_numeric($val[5])) ){
         $val[3] = str_replace('日', '', $val[3]);  // "日"を空文字に置換する
         $val[3] = str_replace('年', '-', $val[3]); // "年"を"-"に置換する
         $val[3] = str_replace('月', '-', $val[3]); // "月"を"-"に置換する
@@ -525,7 +544,7 @@ exit;
         $val[7] = $val[7] ? $val[7] : 0;
         $val[8] = $val[8] ? $val[8] : 0;
         $val[9] = $val[9] ? $val[9] : 0;
-        $sql = "INSERT INTO speed_datas (user_id,speed_date,casq_10m,casq_30m,casq_10m_act,casq_5m_10m_5m,standing_jump,vertical_jump,tmp_user_id,trial_count,year,school_id,this_year) values ($user_id, '{$val[3]}', $val[4], $val[5], $val[6], $val[7], $val[8], $val[9], '$tmp_user_id',$trial_count,$year,$school,$this_year) ON DUPLICATE KEY UPDATE year = $year, created = created, school_id = $school, speed_date = '{$val[3]}'";
+        $sql = "INSERT INTO speed_datas (user_id,speed_date,casq_10m,casq_30m,casq_10m_act,casq_5m_10m_5m,standing_jump,vertical_jump,tmp_user_id,trial_count,year,school_id,this_year) values ($user_id, '{$val[3]}', $val[4], $val[5], $val[6], $val[7], $val[8], $val[9], '$tmp_user_id',$trial_count,$year,$school,$this_year) ON DUPLICATE KEY UPDATE year = $year, created = created, school_id = $school, speed_date = '{$val[3]}', casq_10m = $val[4],casq_30m = $val[5],casq_10m_act = $val[6],casq_5m_10m_5m = $val[7],standing_jump = $val[8],vertical_jump = $val[9]";
         echo "OK:($user_id)\n";
         if ( $argv[1] == "test" ){
             echo $val[1]."\n";

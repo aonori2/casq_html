@@ -18,17 +18,19 @@ $query = "select * from speed_datas where trial_count = 2 and char_length(questi
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 12957 order by modified asc limit 0,100";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and char_length(advice_txt) < 10 and user_id IN ( 10324, 1489, 1540, 1486, 8234 )";
 $query = "SELECT * FROM  speed_datas where trial_count=2 and user_id = 1623 order by modified asc limit 0,100";
-$query = "select * from speed_datas where id = 10768";
 
 $query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 AND char_length(advice_txt)<10 order by this_year desc,user_id, modified asc limit 0,100";
 $query = "select * from speed_datas where id = 10567 and this_year = 2026";
-$query = "SELECT * FROM speed_datas where trial_count=1 and this_year=2026 order by this_year desc, modified asc limit 2350";
+$query = "select * from speed_datas where user_id = 2212 and this_year = 2026 and trial_count = 2";
+$query = "select * from speed_datas where school_id = 3 and this_year = 2026 and trial_count = 2";
+$query = "select * from speed_datas where school_id = 23 and this_year = 2026 and trial_count = 2";
+$query = "SELECT * FROM speed_datas where trial_count=2 and this_year=2026 order by this_year desc, modified asc limit 0,2000";
 $stmt = $dbh->query($query);
 
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
-                    $trial_count = 1;
+                    $trial_count = 2;
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
 /////////////////////////////////////////////////// 確認 ///////////////////////////////////////////////////
@@ -41,12 +43,17 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $nendo = getFiscalYearOfToday();
     $this_year = $row['this_year'];
 
-    if ( $trial_count > 1 ){
+
+    $query = "select * from speed_datas where user_id = {$row['user_id']} and this_year = $this_year";
+    $stmt2 = $dbh->query($query);
+    $t_count = $stmt2->rowCount();
+
+    if ( $t_count > 1 ){
 
     $trial_count2 = ($trial_count-1);
     $query = "select * from speed_datas where user_id = {$row['user_id']} and this_year = $this_year and trial_count = $trial_count2";
-    $stmt = $dbh->query($query);
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt3 = $dbh->query($query);
+    $res = $stmt3->fetch(PDO::FETCH_ASSOC);
 
     $req_question1 = "前回の測定値は、".strstr($res['question_txt'],"私",true);
 
@@ -62,13 +69,14 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 #echo $req_question2;exit;
     
     list($req_question2,$question_txt) = chatgpt_api( $req_question2 );
-#echo $question_txt;
+#echo $question_txt."\n";
+#echo strlen($req_question2);exit;
 #echo $req_question2;exit;
 #continue;
 
     if ( strlen($req_question2)>500 ){
     $sql2 = "update speed_datas set advice_txt= '$req_question2', question_txt= '$question_txt',  modified='$now' WHERE user_id = {$users['id']} and trial_count=$trial_count and this_year = $this_year";
-#echo $sql2;
+#echo $sql2;exit;
     $dbh->query($sql2);
     $u =  get_user($users['id']);
     echo "END. {$users['id']}:: {$u['user_id']}\n";
@@ -696,6 +704,7 @@ $a = '出力には適宜、改行を入れてください。';
 $b = '出力にはmarkdownで、適宜改行を入れてください。質問を促すアドバイスを入れないでください。';
 $b .= '立ち幅跳びの数値が0の場合はアドバイスで触れないで下さい。測定前の数値になります。';
 $b .= '垂直跳びの数値が0の場合はアドバイスで触れないで下さい。測定前の数値になります。';
+$b .= 'タイムを比較するテーブルは作らないで下さい。';
 
 #$b .= 'アドバイス内容に、スキップ系のアドバイスを入れないでください。A-Skip、B-Skip、Aスキップ、Bスキップ、A-スキップ、B-スキップが入る場合は違うトレーニング内容に変更して下さい';
 #$b .= 'アドバイス内容に、AまたはBスキップの文言が入る場合は、その文言自体にgoogleで検索出来るHTMLリンクを付けてください。検索文字列は、[ABスキップ とは]にしてください。';

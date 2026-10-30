@@ -45,8 +45,8 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
     $trial_count2 = ($trial_count-1);
     $query = "select * from speed_datas where user_id = {$row['user_id']} and this_year = $this_year and trial_count = $trial_count2";
-    $stmt = $dbh->query($query);
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt2 = $dbh->query($query);
+    $res = $stmt2->fetch(PDO::FETCH_ASSOC);
 
     $req_question1 = "前回の測定値は、".strstr($res['question_txt'],"私",true);
 

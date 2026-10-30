@@ -1,15 +1,14 @@
 <?PHP
 require_once("../casq_html/db.php");
 #$query = "select user_id from speed_datas where advice_txt like ('%Aスキップ%' ) group by user_id";
-$query = "SELECT * FROM speed_datas where trial_count=1 AND this_year = 2026  order by school_id,year desc";
 $query = "SELECT * FROM speed_datas where trial_count=1 AND school_id IN(37,54) AND this_year = 2026  order by school_id desc";
+$query = "SELECT * FROM speed_datas where trial_count=2 AND this_year = 2026  order by year desc";
 $stmt = $dbh->query($query);
 $body = "";
 while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     $u = get_user($row['user_id']);
     extract($u);
 
-/*
     $effcUser = get_effc();
     $ef = $user_name.$user_name2;
     if ( in_array($ef,$effcUser) ){
@@ -17,6 +16,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         echo "https://casq-st.com/$user_id\n";
     }
     continue;
+/*
 */
 
     $ef = $user_name.$user_name2;
@@ -29,7 +29,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
     } else {
     if ( $body ){
         $shool = mb_convert_encoding($scn_org, "utf-8", "AUTO");
-        file_put_contents( "/tmp/{$sid_org}_{$shool}_2026_01.csv", $body);
+        file_put_contents( "/tmp/{$sid_org}_{$shool}_2026_02.csv", $body);
         #echo "$scn_org = $scn\n";
         #echo $body."\n";
         $body = "";
@@ -47,5 +47,5 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 }
 if ( $body ){
 $shool = mb_convert_encoding($scn_org, "utf-8", "AUTO");
-file_put_contents( "/tmp/{$sid_org}_{$shool}_2026_01.csv", $body);
+file_put_contents( "/tmp/{$sid_org}_{$shool}_2026_02.csv", $body);
 }
